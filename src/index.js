@@ -28,7 +28,7 @@ if (!fs.existsSync(uploadsDir)) {
 // Middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: ['https://thesoloakash.com', 'http://localhost:3000'],
     credentials: true,
   })
 );
