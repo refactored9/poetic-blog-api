@@ -13,6 +13,7 @@ const newsletterRoutes = require('./routes/newsletter');
 const aboutRoutes = require('./routes/about');
 const gearRoutes = require('./routes/gear');
 const contactRoutes = require('./routes/contact');
+const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/gear', gearRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
