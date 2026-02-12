@@ -14,6 +14,10 @@ const aboutRoutes = require('./routes/about');
 const gearRoutes = require('./routes/gear');
 const contactRoutes = require('./routes/contact');
 const analyticsRoutes = require('./routes/analytics');
+const authRoutes = require('./routes/auth');
+const guideRoutes = require('./routes/guides');
+const commentRoutes = require('./routes/comments');
+const reactionRoutes = require('./routes/reactions');
 
 const app = express();
 
@@ -48,6 +52,10 @@ app.use('/api/about', aboutRoutes);
 app.use('/api/gear', gearRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/guides', guideRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/reactions', reactionRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

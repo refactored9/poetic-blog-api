@@ -23,6 +23,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+// @route   GET /api/journeys/treks
+// @desc    Get all journeys with enabled routes (treks)
+router.get('/treks', async (req, res) => {
+  try {
+    const journeys = await Journey.find({
+      isPublished: true,
+      'route.enabled': true,
+    }).sort({ date: -1 });
+    res.json(journeys);
+  } catch (error) {
+    console.error('Error fetching treks:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // @route   GET /api/journeys/:id
 // @desc    Get single journey by ID
 router.get('/:id', async (req, res) => {
@@ -44,7 +59,7 @@ router.get('/:id', async (req, res) => {
 // @desc    Create a new journey
 router.post('/', async (req, res) => {
   try {
-    const { title, description, coverImage, images, location, date, isPublished } = req.body;
+    const { title, description, coverImage, images, location, date, isPublished, route } = req.body;
 
     const journey = new Journey({
       title,
@@ -54,6 +69,7 @@ router.post('/', async (req, res) => {
       location,
       date: date || new Date(),
       isPublished: isPublished || false,
+      route: route || undefined,
     });
 
     const savedJourney = await journey.save();
@@ -68,7 +84,7 @@ router.post('/', async (req, res) => {
 // @desc    Update a journey
 router.put('/:id', async (req, res) => {
   try {
-    const { title, description, coverImage, images, location, date, isPublished } = req.body;
+    const { title, description, coverImage, images, location, date, isPublished, route } = req.body;
 
     const journey = await Journey.findById(req.params.id);
 
@@ -83,6 +99,7 @@ router.put('/:id', async (req, res) => {
     if (location !== undefined) journey.location = location;
     if (date) journey.date = date;
     if (isPublished !== undefined) journey.isPublished = isPublished;
+    if (route !== undefined) journey.route = route;
 
     const updatedJourney = await journey.save();
     res.json(updatedJourney);
